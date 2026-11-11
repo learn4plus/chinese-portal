@@ -1,19 +1,309 @@
+
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Learn4Plus | Chinese Learning Hub</title>
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <style>
-:root{font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;color:#173455;background:#f3f8ff}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 85% 0%,#dcecff 0,transparent 42%),#f3f8ff}header{background:#fff;border-bottom:1px solid #dbe7f5}nav{max-width:1160px;margin:auto;padding:17px 24px;display:flex;align-items:center;gap:14px}.logo{width:48px;height:48px;object-fit:contain;border-radius:12px}.brand{font-size:21px;font-weight:800;color:#164b9b}.subbrand{font-size:12px;color:#67819e}main{max-width:1160px;margin:auto;padding:60px 24px 75px}.eyebrow{display:inline-block;color:#1461c5;background:#e1efff;padding:8px 14px;border-radius:50px;font-size:13px;font-weight:700}.hero h1{font-size:clamp(32px,5vw,54px);letter-spacing:-1.5px;margin:20px 0 12px;color:#133c76}.hero p{font-size:17px;line-height:1.7;color:#61758d;max-width:650px;margin:0}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:45px}.card{background:#fff;border:1px solid #dae6f5;border-radius:22px;padding:28px;box-shadow:0 10px 28px #174c8710;display:flex;flex-direction:column;min-height:345px;transition:transform .2s,box-shadow .2s}.card:hover{transform:translateY(-5px);box-shadow:0 18px 35px #174c8720}.symbol{width:62px;height:62px;display:grid;place-items:center;border-radius:18px;background:#e7f1ff;color:#1760c2;font-size:29px;font-weight:700}.card h2{font-size:23px;margin:23px 0 8px;color:#153d77}.cn{font-size:15px;color:#2870c8;margin-bottom:12px}.card p{color:#657a91;line-height:1.7;font-size:15px;margin:0 0 25px}.launch{margin-top:auto;display:flex;justify-content:center;align-items:center;gap:8px;text-decoration:none;background:#1769d2;color:#fff;padding:14px 16px;border-radius:12px;font-weight:750}.launch:hover{background:#0c51ad}.card:nth-child(2) .symbol{background:#e8f7f2;color:#168669}.card:nth-child(3) .symbol{background:#f0ebff;color:#7452c7}footer{text-align:center;color:#7a90a7;padding:0 20px 28px;font-size:13px}@media(max-width:850px){.grid{grid-template-columns:1fr;max-width:540px}.card{min-height:unset}main{padding-top:40px}}@media(min-width:851px) and (max-width:1050px){.card{padding:20px}.card h2{font-size:20px}}
+:root{
+  font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;
+  color:#173455;
+  background:#f3f8ff;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  background:radial-gradient(ellipse at 85% 0%,#dcecff 0,transparent 42%),#f3f8ff;
+}
+header{
+  background:#fff;
+  border-bottom:1px solid #dbe7f5;
+}
+nav{
+  max-width:1160px;
+  margin:auto;
+  padding:17px 24px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.logo{
+  width:48px;
+  height:48px;
+  object-fit:contain;
+  border-radius:12px;
+}
+.brand{
+  font-size:21px;
+  font-weight:800;
+  color:#164b9b;
+}
+.subbrand{
+  font-size:12px;
+  color:#67819e;
+}
+main{
+  max-width:1160px;
+  margin:auto;
+  padding:60px 24px 75px;
+}
+.eyebrow{
+  display:inline-block;
+  color:#1461c5;
+  background:#e1efff;
+  padding:8px 14px;
+  border-radius:50px;
+  font-size:13px;
+  font-weight:700;
+}
+.hero h1{
+  font-size:clamp(32px,5vw,54px);
+  letter-spacing:-1.5px;
+  margin:20px 0 12px;
+  color:#133c76;
+}
+.hero p{
+  font-size:17px;
+  line-height:1.7;
+  color:#61758d;
+  max-width:700px;
+  margin:0;
+}
+.section-heading{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:48px;
+}
+.section-heading h2{
+  margin:0;
+  font-size:25px;
+  color:#153d77;
+}
+.section-heading span{
+  color:#7b90a7;
+  font-size:14px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:22px;
+  margin-top:22px;
+}
+.card{
+  background:#fff;
+  border:1px solid #dae6f5;
+  border-radius:22px;
+  padding:28px;
+  box-shadow:0 10px 28px #174c8710;
+  display:flex;
+  flex-direction:column;
+  min-height:345px;
+  transition:transform .2s,box-shadow .2s;
+}
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 18px 35px #174c8720;
+}
+.symbol{
+  width:62px;
+  height:62px;
+  display:grid;
+  place-items:center;
+  border-radius:18px;
+  background:#e7f1ff;
+  color:#1760c2;
+  font-size:29px;
+  font-weight:700;
+}
+.card h3{
+  font-size:23px;
+  margin:23px 0 8px;
+  color:#153d77;
+}
+.cn{
+  font-size:15px;
+  color:#2870c8;
+  margin-bottom:12px;
+}
+.card p{
+  color:#657a91;
+  line-height:1.7;
+  font-size:15px;
+  margin:0 0 25px;
+}
+.launch{
+  margin-top:auto;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  text-decoration:none;
+  background:#1769d2;
+  color:#fff;
+  padding:14px 16px;
+  border-radius:12px;
+  font-weight:750;
+}
+.launch:hover{
+  background:#0c51ad;
+}
+.card:nth-child(2) .symbol{
+  background:#e8f7f2;
+  color:#168669;
+}
+.card:nth-child(3) .symbol{
+  background:#f0ebff;
+  color:#7452c7;
+}
+.bomb .symbol{
+  background:#fff0ef;
+  color:#dc4444;
+}
+.potato .symbol{
+  background:#fff3dc;
+  color:#bb7814;
+}
+footer{
+  text-align:center;
+  color:#7a90a7;
+  padding:0 20px 28px;
+  font-size:13px;
+}
+@media(max-width:850px){
+  .grid{
+    grid-template-columns:1fr;
+    max-width:540px;
+  }
+  .card{min-height:unset}
+  main{padding-top:40px}
+}
+@media(min-width:851px) and (max-width:1050px){
+  .card{padding:20px}
+  .card h3{font-size:20px}
+}
 </style>
 </head>
+
 <body>
-<header><nav><img src="favicon.ico" alt="Learn4Plus logo" class="logo"><div><div class="brand">Learn4Plus</div><div class="subbrand">Chinese Learning Hub · 中文学习中心</div></div></nav></header>
-<main><section class="hero"><span class="eyebrow">中文学习 · Learn • Listen • Write</span><h1>Practice Chinese, your way.</h1><p>Choose a learning activity below. Practice Chinese handwriting, prepare dictation worksheets, or test your listening and writing skills—all in one place.</p></section>
-<section class="grid" aria-label="Learning tools">
-<article class="card"><div class="symbol" aria-hidden="true">写</div><h2>Hanzi Writing Practice</h2><div class="cn">汉字书写练习</div><p>Enter up to five characters, practice stroke order with interactive writing boxes, and watch stroke animations.</p><a class="launch" href="hanzi-practice.html">Open Writing Practice <span aria-hidden="true">→</span></a></article>
-<article class="card"><div class="symbol" aria-hidden="true">听</div><h2>Chinese Dictation</h2><div class="cn">中文听写练习</div><p>Create your own vocabulary lists, listen to Mandarin pronunciation, and print A4 worksheets with Pinyin lines and writing squares.</p><a class="launch" href="dictation.html">Open Dictation <span aria-hidden="true">→</span></a></article>
-<article class="card"><div class="symbol" aria-hidden="true">测</div><h2>Listening & Writing Test</h2><div class="cn">听写测验</div><p>Hear randomized Chinese phrases three times, then write them using the interactive handwriting editor.</p><a class="launch" href="listening-writing.html">Open Listening Test <span aria-hidden="true">→</span></a></article>
-</section></main><footer>© Learn4Plus · Chinese Learning Hub</footer>
-</body></html>
+
+<header>
+  <nav>
+    <img src="favicon.ico" alt="Learn4Plus logo" class="logo">
+    <div>
+      <div class="brand">Learn4Plus</div>
+      <div class="subbrand">Chinese Learning Hub · 中文学习中心</div>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero">
+    <span class="eyebrow">中文学习 · Learn • Listen • Write • Play</span>
+    <h1>Practice Chinese, your way.</h1>
+    <p>
+      Explore interactive Chinese learning tools and classroom games.
+      Practice handwriting, improve listening, and make vocabulary
+      learning fun with your classmates.
+    </p>
+  </section>
+
+  <section aria-label="Learning tools">
+    <div class="section-heading">
+      <h2>Learning Tools</h2>
+      <span>学习工具</span>
+    </div>
+
+    <div class="grid">
+
+      <article class="card">
+        <div class="symbol" aria-hidden="true">写</div>
+        <h3>Hanzi Writing Practice</h3>
+        <div class="cn">汉字书写练习</div>
+        <p>
+          Enter up to five characters, practice stroke order with
+          interactive writing boxes, and watch stroke animations.
+        </p>
+        <a class="launch" href="hanzi-practice.html">
+          Open Writing Practice <span aria-hidden="true">→</span>
+        </a>
+      </article>
+
+      <article class="card">
+        <div class="symbol" aria-hidden="true">听</div>
+        <h3>Chinese Dictation</h3>
+        <div class="cn">中文听写练习</div>
+        <p>
+          Create your own vocabulary lists, listen to Mandarin pronunciation,
+          and print A4 worksheets with Pinyin lines and writing squares.
+        </p>
+        <a class="launch" href="dictation.html">
+          Open Dictation <span aria-hidden="true">→</span>
+        </a>
+      </article>
+
+      <article class="card">
+        <div class="symbol" aria-hidden="true">测</div>
+        <h3>Listening &amp; Writing Test</h3>
+        <div class="cn">听写测验</div>
+        <p>
+          Hear randomized Chinese phrases three times, then write them
+          using the interactive handwriting editor.
+        </p>
+        <a class="launch" href="listening-writing.html">
+          Open Listening Test <span aria-hidden="true">→</span>
+        </a>
+      </article>
+
+    </div>
+  </section>
+
+  <section aria-label="Classroom games">
+    <div class="section-heading">
+      <h2>Classroom Games</h2>
+      <span>课堂游戏</span>
+    </div>
+
+    <div class="grid">
+
+      <article class="card bomb">
+        <div class="symbol" aria-hidden="true">💣</div>
+        <h3>Chinese Word Bomb</h3>
+        <div class="cn">中文炸弹</div>
+        <p>
+          Find the hidden bomb using Chinese vocabulary!
+          Classmates give loud or soft pronunciation clues
+          depending on how close you are to the bomb.
+        </p>
+        <a class="launch" href="bomb.html">
+          Play Word Bomb <span aria-hidden="true">→</span>
+        </a>
+      </article>
+
+      <article class="card potato">
+        <div class="symbol" aria-hidden="true">🥔</div>
+        <h3>Chinese Hot Potato</h3>
+        <div class="cn">烫手山芋</div>
+        <p>
+          Say the Chinese word correctly to pass the potato.
+          Press Space to change words before the hidden timer explodes!
+          The unlucky player must make a sentence.
+        </p>
+        <a class="launch" href="hot-potato.html">
+          Play Hot Potato <span aria-hidden="true">→</span>
+        </a>
+      </article>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>© Learn4Plus · Chinese Learning Hub</footer>
+
+</body>
+</html>
