@@ -16,10 +16,18 @@ body{background:#eaf3ff;color:#153f7b;font-family:system-ui,sans-serif}
 .tile .whole{display:flex;flex-direction:column;align-items:center}
 .tile .whole small{font:400 .35em/1.1 system-ui,sans-serif}
 #empty{position:fixed;inset:0;display:grid;place-items:center;text-align:center;color:#6282ac;font-size:clamp(20px,3vw,40px)}
-#boom{position:fixed;inset:0;display:none;place-items:center;text-align:center;background:radial-gradient(circle,#ffe45d,#ff7027 45%,#9b1431);color:white;z-index:10;animation:flash .6s 2}
-#boom strong{font-size:clamp(65px,15vw,190px);text-shadow:0 10px #7b1c1c}
-#boom p{font-size:clamp(18px,3vw,42px)}
-@keyframes flash{50%{filter:brightness(1.8)}}
+#boom{position:fixed;inset:0;display:none;place-items:center;text-align:center;overflow:hidden;isolation:isolate;background:radial-gradient(circle at 50% 50%,#ff9e22 0%,#e93a23 38%,#581329 100%);color:#fff;z-index:10;animation:boomBackdrop 1.8s ease-out both}
+#boom:before{content:"";position:absolute;inset:-20%;z-index:-1;background:repeating-conic-gradient(from 0deg at 50% 50%,#ffe65a 0deg 14deg,#ff7c23 14deg 27deg,#ff3b2d 27deg 39deg);animation:boomRays 1.6s ease-out both}
+#boom:after{content:"";position:absolute;left:50%;top:50%;width:10vmin;height:10vmin;border:3vmin solid #fff5a6;border-radius:50%;transform:translate(-50%,-50%) scale(0);animation:shockwave 1.15s .12s ease-out both;pointer-events:none}
+#boom>div{position:relative;z-index:3;animation:boomContent 1.4s cubic-bezier(.2,1.3,.4,1) both}
+#boom strong{display:block;font-size:clamp(5rem,17vw,15rem);line-height:1;letter-spacing:-.05em;text-shadow:0 10px 0 #9b221c,0 18px 30px #4a090b;animation:boomTitle .8s .15s cubic-bezier(.15,1.7,.35,1) both}
+#boom p{font-size:clamp(1.3rem,3vw,2.8rem);font-weight:900;text-shadow:0 3px 8px #6d1325}
+@keyframes boomBackdrop{0%,12%{filter:brightness(5)}20%{filter:brightness(1.2)}30%,40%{filter:brightness(.75)}50%{filter:brightness(1.35)}100%{filter:brightness(1)}}
+@keyframes boomRays{0%{opacity:0;transform:scale(.12) rotate(-30deg)}18%{opacity:1;transform:scale(1.2) rotate(5deg)}100%{opacity:.45;transform:scale(1.7) rotate(22deg)}}
+@keyframes shockwave{0%{opacity:1;transform:translate(-50%,-50%) scale(0)}100%{opacity:0;transform:translate(-50%,-50%) scale(18)}}
+@keyframes boomContent{0%,25%{opacity:0;transform:scale(.6)}40%{opacity:1;transform:scale(1.1)}55%{transform:scale(.96)}100%{transform:scale(1)}}
+@keyframes boomTitle{0%{transform:scale(.1) rotate(-25deg)}65%{transform:scale(1.25) rotate(4deg)}100%{transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){#boom,#boom:before,#boom:after,#boom>div,#boom strong{animation:none!important}}
 </style></head><body><div id="empty">Waiting for teacher…<div style="font-size:16px;margin-top:16px">Press F11 for fullscreen if needed</div></div><div id="grid"></div><div id="boom"><div><strong>💥 BOOM!</strong><p id="boomText"></p></div></div>
 <script src="https://cdn.jsdelivr.net/npm/pinyin-pro@3.27.0/dist/index.js"></script>
 <script>
@@ -81,7 +89,7 @@ channel.onmessage=e=>{
  const m=e.data||{};
  if(m.type==='state'){state=m;draw()}
  if(m.type==='boom'){document.getElementById('boomText').textContent=m.description||'';
-  document.getElementById('boom').style.display='grid'}
+  {const boom=document.getElementById('boom');boom.style.display='none';void boom.offsetWidth;boom.style.display='grid'}}
  if(m.type==='presentationPositioned'){document.title='Word Bomb — Audience (Screen 2)'}
  if(m.type==='closeBoom')document.getElementById('boom').style.display='none';
 };
