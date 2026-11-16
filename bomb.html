@@ -146,7 +146,7 @@ function beginGuessing(){if(!bombs.size||playing)return;playing=true;$('stage').
 function newRound(){flipped.clear();const edited=currentEditor();if(edited.length<2){alert('Enter at least 2 different words first.');return}activeWords=edited;activeName=$('lessonName').value.trim()||'Unsaved lesson';$('activeLesson').textContent=activeName+' · '+activeWords.length+' words';cols=Number($('columns').value);guessed.clear();playing=false;bombs=new Set();const numberOfBombs=Math.min(3,Math.ceil(activeWords.length/20));while(bombs.size<numberOfBombs)bombs.add(Math.floor(Math.random()*activeWords.length));$('feedback').textContent='';$('stage').classList.add('hide');$('game').classList.remove('hide');document.body.classList.add('play-mode');$('roundStatus').textContent='Player turns around. Classmates memorize all bombs. Press Space to hide it.';draw()}
 if(document.fonts?.ready)document.fonts.ready.then(()=>requestAnimationFrame(fitTileText));$('audienceOpen').onclick=async()=>{
  // Open synchronously from the click so popup blockers are less likely to stop it.
- audienceWindow=window.open('word-bomb-synced-audience-v2.html','Learn4PlusAudience','popup=yes,width=1280,height=800');
+ audienceWindow=window.open('word-bomb-audience.html','Learn4PlusAudience','popup=yes,width=1280,height=800');
  if(!audienceWindow){
    alert('Please allow pop-ups for this website, then click Start Presentation again.');
    return;
