@@ -75,7 +75,15 @@ body.dual-teacher.play-mode .tile{font-size:clamp(13px,2vw,35px)}
 #grid{gap:7px;grid-template-columns:repeat(var(--cols,6),minmax(0,1fr))}
 #grid .tile{aspect-ratio:auto;min-height:65px;max-height:95px;padding:4px;overflow:hidden}
 #grid .tile>span:first-child{font-size:inherit;max-width:100%}
-</style></head><body><header><img src="favicon.ico" alt="Learn4Plus" onerror="this.style.display='none'"><div><h1>💣 Learn4Plus Word Bomb</h1><span class="hint">中文炸弹 · Digital Classroom Arcade</span></div><a href="index.html">⌂ Go Home</a></header><main><aside class="panel teacher"><h2>📚 Lesson Library</h2><label for="lessons">Saved lesson</label><select id="lessons"></select><div class="actions"><button id="load" class="primary">Load lesson</button><button id="new">New</button></div><label for="lessonName">Lesson name</label><input id="lessonName" placeholder="Stage 9: Unit 5.6" maxlength="100"><label for="words">Chinese words / phrases (one per line)</label><textarea id="words" placeholder="苹果&#10;老师&#10;学校&#10;朋友"></textarea><p class="hint">Enter 2–60 words or phrases. 1–20 words = 1 bomb; 21–40 = 2 bombs; 41–60 = 3 bombs. Optional pronunciation override: 汉字 | tone-marked pinyin (example: 银行 | yín háng). Click a tile to flip to Pinyin; click again to flip back. Each line becomes one tile; duplicates are removed. Longer lists automatically fit the screen.</p><div class="actions"><button id="save" class="primary">Save lesson</button><button id="delete" class="danger">Delete</button></div><hr style="border:0;border-top:1px solid #e4ebf5;margin:18px 0"><h2>⚙️ Game settings</h2><label for="columns">Preferred grid columns (auto-fitted in Play Mode)</label><select id="columns"><option value="3">3 columns</option><option value="4" selected>4 columns</option><option value="5">5 columns</option><option value="6">6 columns</option><option value="7">7 columns</option><option value="8">8 columns</option><option value="9">9 columns</option><option value="10">10 columns</option></select><label><input id="teacherHints" type="checkbox" style="width:auto" checked> Show closeness clue after a guess</label><p class="hint">Classmates say the chosen word softly when far away and loudly when close. Closeness uses grid steps to the nearest remaining bomb, not vocabulary meaning.</p><div class="actions"><button id="export">Export lessons</button><button id="import">Import lessons</button><input id="importFile" type="file" accept="application/json,.json" hidden></div><p class="hint">Lessons are saved only in this browser/device. Export a backup before clearing browser data.</p></aside><section class="panel"><div class="toolbar"><span class="pill" id="activeLesson">No lesson loaded</span><button id="start" class="primary">💣 Show bombs / New round</button><button id="reveal">👁 Teacher reveal</button><button id="fullscreen">⛶ Fullscreen</button><button id="audienceOpen" class="primary">🖥 Start Presentation</button></div><div id="stage" class="stage"><div><strong>Ready for Word Bomb?</strong><p>Load a lesson, then hide the bomb to begin.</p></div></div><div id="game" class="hide"><div class="status" id="roundStatus">Point to a word. Everyone says it aloud!</div><div id="grid" class="grid"></div><div class="feedback" id="feedback" aria-live="polite"></div></div><div class="footer hint">Dual-screen: open the audience window, move it to the second display and press F11. Teacher controls stay on the primary screen. How to play: player turns around; teacher starts a round and classmates memorize the visible bombs. Press Space to hide the bombs, then player turns back and points to words. The class reads it with volume based on how near its tile is to the bomb. The player keeps guessing until all bombs are found!</div></section></main><div id="overlay" class="screen hide" role="dialog" aria-modal="true"><div><strong id="overlayTitle">🙈 Turn around!</strong><p id="overlayText">The bombs are being hidden.</p><button id="overlayButton" class="primary">Player ready → Start</button></div></div><script src="https://cdn.jsdelivr.net/npm/pinyin-pro@3.27.0/dist/index.js"></script><script>
+
+/* Display-mode selector, only offered when multiple screens are available. */
+#modePicker{position:fixed;inset:0;z-index:200;background:#102d59aa;display:grid;place-items:center;padding:20px}
+#modePicker[hidden]{display:none!important}
+#modePicker .mode-panel{background:white;color:#193353;border-radius:22px;padding:26px;width:min(480px,100%);box-shadow:0 16px 65px #061e4266}
+#modePicker .mode-buttons{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+#modePicker .mode-buttons button{padding:18px 10px}
+#modePicker p{line-height:1.5;color:#63758b}
+</style></head><body><header><img src="favicon.ico" alt="Learn4Plus" onerror="this.style.display='none'"><div><h1>💣 Learn4Plus Word Bomb</h1><span class="hint">中文炸弹 · Digital Classroom Arcade</span></div><a href="index.html">⌂ Go Home</a></header><main><aside class="panel teacher"><h2>📚 Lesson Library</h2><label for="lessons">Saved lesson</label><select id="lessons"></select><div class="actions"><button id="load" class="primary">Load lesson</button><button id="new">New</button></div><label for="lessonName">Lesson name</label><input id="lessonName" placeholder="Stage 9: Unit 5.6" maxlength="100"><label for="words">Chinese words / phrases (one per line)</label><textarea id="words" placeholder="苹果&#10;老师&#10;学校&#10;朋友"></textarea><p class="hint">Enter 2–60 words or phrases. 1–20 words = 1 bomb; 21–40 = 2 bombs; 41–60 = 3 bombs. Optional pronunciation override: 汉字 | tone-marked pinyin (example: 银行 | yín háng). Click a tile to flip to Pinyin; click again to flip back. Each line becomes one tile; duplicates are removed. Longer lists automatically fit the screen.</p><div class="actions"><button id="save" class="primary">Save lesson</button><button id="delete" class="danger">Delete</button></div><hr style="border:0;border-top:1px solid #e4ebf5;margin:18px 0"><h2>⚙️ Game settings</h2><label for="columns">Preferred grid columns (auto-fitted in Play Mode)</label><select id="columns"><option value="3">3 columns</option><option value="4" selected>4 columns</option><option value="5">5 columns</option><option value="6">6 columns</option><option value="7">7 columns</option><option value="8">8 columns</option><option value="9">9 columns</option><option value="10">10 columns</option></select><label><input id="teacherHints" type="checkbox" style="width:auto" checked> Show closeness clue after a guess</label><p class="hint">Classmates say the chosen word softly when far away and loudly when close. Closeness uses grid steps to the nearest remaining bomb, not vocabulary meaning.</p><div class="actions"><button id="export">Export lessons</button><button id="import">Import lessons</button><input id="importFile" type="file" accept="application/json,.json" hidden></div><p class="hint">Lessons are saved only in this browser/device. Export a backup before clearing browser data.</p></aside><section class="panel"><div class="toolbar"><span class="pill" id="activeLesson">No lesson loaded</span><button id="start" class="primary">💣 Show bombs / New round</button><button id="reveal">👁 Teacher reveal</button><button id="fullscreen">⛶ Fullscreen</button><button id="audienceOpen" class="primary">🖥 Display Mode</button></div><div id="stage" class="stage"><div><strong>Ready for Word Bomb?</strong><p>Load a lesson, then hide the bomb to begin.</p></div></div><div id="game" class="hide"><div class="status" id="roundStatus">Point to a word. Everyone says it aloud!</div><div id="grid" class="grid"></div><div class="feedback" id="feedback" aria-live="polite"></div></div><div class="footer hint">Dual-screen: open the audience window, move it to the second display and press F11. Teacher controls stay on the primary screen. How to play: player turns around; teacher starts a round and classmates memorize the visible bombs. Press Space to hide the bombs, then player turns back and points to words. The class reads it with volume based on how near its tile is to the bomb. The player keeps guessing until all bombs are found!</div></section></main><div id="overlay" class="screen hide" role="dialog" aria-modal="true"><div><strong id="overlayTitle">🙈 Turn around!</strong><p id="overlayText">The bombs are being hidden.</p><button id="overlayButton" class="primary">Player ready → Start</button></div></div><div id="modePicker" hidden role="dialog" aria-modal="true" aria-labelledby="modeTitle"><div class="mode-panel"><h2 id="modeTitle">Choose display mode</h2><p id="modeInfo">Two screens detected. How would you like to play?</p><div class="mode-buttons"><button id="chooseSingle" class="primary">🖥 One screen</button><button id="chooseDual" class="primary">🖥🖥 Two screens</button></div><div class="actions"><button id="cancelMode">Cancel</button></div></div></div><script src="https://cdn.jsdelivr.net/npm/pinyin-pro@3.27.0/dist/index.js"></script><script>
 (()=>{'use strict';const channel=new BroadcastChannel('learn4plus_word_bomb_dual_v1');
 let dualScreen=false, audienceWindow=null;
 function syncAudience(){
@@ -85,7 +93,7 @@ function syncAudience(){
 }
 channel.onmessage=e=>{
  const m=e.data||{};
- if(m.type==='ready'){dualScreen=true;document.body.classList.add('dual-teacher');syncAudience();}
+ if(m.type==='ready'&&dualScreen){document.body.classList.add('dual-teacher');syncAudience();}
  if(m.type==='flip'&&Number.isInteger(m.index)&&m.index>=0&&m.index<activeWords.length){
    flipped.has(m.index)?flipped.delete(m.index):flipped.add(m.index);draw();
  }
@@ -149,39 +157,62 @@ b.append(label);if(bombs.has(i)&&!playing){const marker=document.createElement('
 function guess(i){if(!playing||guessed.has(i))return;guessed.add(i);if(bombs.has(i)){bombs.delete(i);playing=false;draw();const remaining=bombs.size;const final=remaining===0;$('roundStatus').textContent=final?'All bombs found!':remaining+' bomb(s) remaining';$('feedback').textContent='💥 BOOM!';setOverlay('💥 BOOM!',final?'All bombs found! Great job!':remaining+' bomb(s) still hidden. Keep looking!',final?'Play another round':'Continue searching',()=>{closeOverlay();if(final)newRound();else{playing=true;draw()}},true);return}const d=Math.min(...[...bombs].map(b=>distance(i,b)));$('feedback').textContent=$('teacherHints').checked?clue(d):'✓ Read the word aloud!';$('roundStatus').textContent=`${guessed.size} guesses · ${bombs.size} bombs left`;draw()}
 function beginGuessing(){if(!bombs.size||playing)return;playing=true;$('stage').classList.add('hide');$('game').classList.remove('hide');$('roundStatus').textContent='Point at a Chinese word!';draw()}
 function newRound(){flipped.clear();const edited=currentEditor();if(edited.length<2){alert('Enter at least 2 different words first.');return}activeWords=edited;activeName=$('lessonName').value.trim()||'Unsaved lesson';$('activeLesson').textContent=activeName+' · '+activeWords.length+' words';cols=Number($('columns').value);guessed.clear();playing=false;bombs=new Set();const numberOfBombs=Math.min(3,Math.ceil(activeWords.length/20));while(bombs.size<numberOfBombs)bombs.add(Math.floor(Math.random()*activeWords.length));$('feedback').textContent='';$('stage').classList.add('hide');$('game').classList.remove('hide');$('roundStatus').textContent='Player turns around. Classmates memorize all bombs. Press Space to hide it.';draw()}
-if(document.fonts?.ready)document.fonts.ready.then(()=>requestAnimationFrame(fitTileText));$('audienceOpen').onclick=async()=>{
- // Open synchronously from the click so popup blockers are less likely to stop it.
+if(document.fonts?.ready)document.fonts.ready.then(()=>requestAnimationFrame(fitTileText));async function openAudience(details){
+ // Called from a real button click, before awaiting anything, to avoid popup blocking.
  audienceWindow=window.open('word-bomb-audience.html','Learn4PlusAudience','popup=yes,width=1280,height=800');
- if(!audienceWindow){
-   alert('Please allow pop-ups for this website, then click Start Presentation again.');
-   return;
- }
- dualScreen=true;
- document.body.classList.add('dual-teacher');
- $('audienceOpen').textContent='🖥 Audience Screen Open';
+ if(!audienceWindow){alert('Allow pop-ups for this site and try again.');return}
+ dualScreen=true;document.body.classList.add('dual-teacher');
+ $('audienceOpen').textContent='🖥🖥 Two-screen mode';
  syncAudience();
  try{
-   if(typeof window.getScreenDetails==='function'){
-     const details=await window.getScreenDetails();
-     const screens=details.screens||[];
-     const primary=screens.find(screen=>screen.isPrimary)||screens[0];
-     const secondary=screens.find(screen=>screen!==primary);
-     if(secondary && !audienceWindow.closed){
-       audienceWindow.moveTo(secondary.availLeft??secondary.left,secondary.availTop??secondary.top);
-       audienceWindow.resizeTo(secondary.availWidth??secondary.width,secondary.availHeight??secondary.height);
-       audienceWindow.focus();
-       channel.postMessage({type:'presentationPositioned'});
-     }else if(!secondary){
-       alert('Only one monitor was detected. Use Windows Win + P → Extend, then try again.');
-     }
-   }else{
-     // Browsers without Window Management API require a manual window move.
-     alert('Audience window opened. This browser does not support automatic monitor placement. Drag it to the second screen and press F11.');
+  if(details?.screens?.length>1){
+   const primary=details.screens.find(x=>x.isPrimary)||details.screens[0];
+   const secondary=details.screens.find(x=>x!==primary);
+   if(secondary){
+    audienceWindow.moveTo(secondary.availLeft??secondary.left,secondary.availTop??secondary.top);
+    audienceWindow.resizeTo(secondary.availWidth??secondary.width,secondary.availHeight??secondary.height);
+    channel.postMessage({type:'presentationPositioned'});
    }
- }catch(err){
-   alert('Audience window opened, but automatic monitor placement was not permitted. Drag it to the second screen and press F11. You can grant Window Management permission in Chrome or Edge.');
- }
+  }else alert('Audience opened. Move it to your second monitor and press F11 if automatic placement is unavailable.');
+ }catch(e){alert('Audience opened. Move it to your second monitor and press F11.');}
  syncAudience();
+}
+function singleMode(){
+ dualScreen=false;document.body.classList.remove('dual-teacher');
+ $('audienceOpen').textContent='🖥 One-screen mode';
+ if(audienceWindow&&!audienceWindow.closed)audienceWindow.close();
+ audienceWindow=null;
+ $('modePicker').hidden=true;
+ drawIfReady();
+}
+function drawIfReady(){if(activeWords.length&&bombs.size)draw()}
+let detectedDetails=null;
+function chooseMode(){
+ $('modePicker').hidden=false;
+ $('modeInfo').textContent=detectedDetails?.screens?.length>1?'Two screens detected. Choose how you want to play.':'Screen detection is unavailable. You can choose one screen or manually open a second.';
+}
+$('chooseSingle').onclick=singleMode;
+$('chooseDual').onclick=()=>{ $('modePicker').hidden=true;openAudience(detectedDetails) };
+$('cancelMode').onclick=()=>{$('modePicker').hidden=true};
+$('audienceOpen').onclick=async()=>{
+ try{
+  if(typeof window.getScreenDetails==='function'){
+   detectedDetails=await window.getScreenDetails();
+   if(detectedDetails.screens.length===1){singleMode();return}
+   chooseMode();return;
+  }
+  // isExtended is a useful hint when the detailed API is unavailable.
+  if(window.screen?.isExtended){chooseMode();return}
+  singleMode();
+ }catch(e){
+  // If permission was declined, don't claim a second screen exists.
+  // Allow an explicit fallback for browsers without monitor detection.
+  detectedDetails=null;chooseMode();
+ }
 };
+// Automatically default to one-screen mode; multi-screen selection is available
+// through Display Mode, and is only shown for detected multiple displays.
+if(window.screen?.isExtended){$('audienceOpen').textContent='🖥 Choose display mode'}
+else {$('audienceOpen').textContent='🖥 One-screen mode'}
 $('start').onclick=newRound;$('save').onclick=()=>{const name=$('lessonName').value.trim();const words=currentEditor();if(!name)return alert('Enter a lesson name, e.g. Stage 9: Unit 5.6');if(words.length<2)return alert('Enter at least 2 different words.');if(library[name]&&!confirm('Overwrite the saved lesson '+name+'?'))return;library[name]=words;if(persist()){options(name);load(name);alert('Lesson saved!')}};$('load').onclick=()=>{const name=$('lessons').value;if(!name)return alert('Select a saved lesson.');load(name)};$('lessons').onchange=()=>{if($('lessons').value)load($('lessons').value)};$('new').onclick=()=>{$('lessons').value='';$('lessonName').value='';$('words').value='';activeName='';activeWords=[];$('activeLesson').textContent='New lesson';resetBoard()};$('delete').onclick=()=>{const name=$('lessons').value||$('lessonName').value.trim();if(!library[name])return alert('Choose a saved lesson first.');if(!confirm('Delete lesson “'+name+'” from this browser?'))return;delete library[name];if(persist()){$('new').click();options()}};$('reveal').onclick=()=>{if(!bombs.size)return alert('Start a round first.');if(!confirm('Teacher only: reveal the bomb? Make sure the guessing player is not looking.'))return;setOverlay('🔐 Teacher reveal','Bombs: '+[...bombs].map(i=>hanzi(activeWords[i])+' (tile '+(i+1)+')').join(', ')+'.','Hide and return',closeOverlay)};$('fullscreen').onclick=()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.().catch(()=>{});else document.exitFullscreen?.()};$('columns').onchange=()=>{if(bombs.size)draw()};window.addEventListener('resize',()=>{if(document.body.classList.contains('play-mode')&&bombs.size)draw()});$('export').onclick=()=>{const blob=new Blob([JSON.stringify({app:'Learn4Plus Word Bomb',version:1,lessons:library},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='learn4plus-word-bomb-lessons.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};$('import').onclick=()=>$('importFile').click();$('importFile').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{const obj=JSON.parse(await file.text());if(!obj||obj.app!=='Learn4Plus Word Bomb'||!obj.lessons||typeof obj.lessons!=='object'||Array.isArray(obj.lessons))throw Error('Not a Learn4Plus Word Bomb export');let count=0;for(const [name,arr] of Object.entries(obj.lessons)){if(typeof name!=='string'||!name.trim()||!Array.isArray(arr))continue;const words=normalize(arr.filter(x=>typeof x==='string').join('\n'));if(words.length<2)continue;library[name.slice(0,100)]=words;count++}if(!count)throw Error('No valid lessons');persist();options();alert('Imported '+count+' lesson(s). Existing lessons with the same name were replaced.')}catch(err){alert('Import failed: '+err.message)}e.target.value=''};window.addEventListener('keydown',e=>{if(e.code==='Space'&&!['INPUT','TEXTAREA','SELECT','BUTTON'].includes(document.activeElement?.tagName)){if(bombs.size&&!playing&&$('overlay').classList.contains('hide')){e.preventDefault();beginGuessing();return}}if(e.key==='Escape'&&document.body.classList.contains('play-mode')){if(document.fullscreenElement)document.exitFullscreen?.().catch(()=>{});return}if(e.key==='Escape'&&!$('overlay').classList.contains('hide')){if($('overlay').classList.contains('boomScreen'))closeOverlay();else e.preventDefault()}});})();
 </script></body></html>
